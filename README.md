@@ -73,14 +73,47 @@ however, I never have luck with arp -a so your router software is a safer bet.
 1.  visit http://[ip address] in a browser and login with the credentials user: admin and no password
 2.  click the wrench icon (hover over your camera preview in the motion eye dashboard) and configure according to the screenshots.
 3.  it is highly recommended you set the camera to be a static ip address as well as your homebridge server if it is not already.
+4.  Take note copy and store two links from the video streaming section
+    1.   snapshot url
+    2.   streaming url
+
     *NOTE*: Do not fill in the motion notification section yet. 
 ![ss1](images/screenshot1.png/?raw=true "title")
 ![ss2](images/screenshot2.png/?raw=true "asdf")
 
-
 ### The motion notification section:
 1. Scroll down under the camera's settings and expand the motion notifications menu
 2. enable "Run A Command" and "Run an End Command"
+3. in the first command input box put the following
+   ```
+   curl http://[ip of homebridge server]:8085/motionStart
+   ```
+4. in the second command input box put the following
+    ```curl http://[ip of homebridge server]:8085/motionEnd```
+### Homebridge Configuration
+Before filling out this section you need two things from the motionEye 
+1. In the settings for homebridge-camera-ffmpeg plugin fill in fields with the following
+   1. name: literally put whatever you want here
+   2. video source: -re -f mjpeg -i [the streaming url you copied from earlier]
+   3. still image source: -f mpjpeg -i [the snapshot url you copied from earlier] -vframes 1 -r 1
+   4. At the moment audio I have not tested audio so disable audio for now
+   5. unbridge the camera (if you would like, I did it)
+   6. in the video output sections increase max concurrent streams to 2 or higher if you want
+   7. max width and height respectively are 1280 800
+   8. max framerate 20fps
+   9. in the automation tab enable motion sensor
+   10. set automatic motion reset to 0
+   11. under mqtt settings set motion topic to homebridge/motion
+   12. motion message should be set to start
+   13. motion reset topic should be homebridge/motion/reset
+   14. motion reset message should be set to end
+   15. under global automation -> mqtt client set mqtt server to 127.0.0.1
+   16. set mqtt port to 1883
+   17. and then hit save and restart homebridge
+
+At this point if you've been able to follow the steps correctly then you should have motion detection and camera output in your homekit app
+
+
 
 References:
 https://www.emqx.com/en/blog/how-to-use-mqtt-in-python

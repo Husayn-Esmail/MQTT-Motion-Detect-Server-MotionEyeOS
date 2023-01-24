@@ -24,8 +24,8 @@ https://github.com/Sunoo/homebridge-camera-ffmpeg#readme
 7. visit http://[ip address] in a browser and login with the credentials user: admin and no password
 8. click the wrench icon (hover over your camera preview in the motion eye dashboard) and configure according to the screenshots.
     *NOTE*: Do not fill in the motion notification section yet. 
-![ss1][/images/screenshot1.png?raw=true "title"]
-![ss2][/images/screenshot2.png?raw=true "asdf"]
+![ss1](images/screenshot1.png/?raw=true "title")
+![ss2](images/screenshot2.png/?raw=true "asdf")
 
 
 
